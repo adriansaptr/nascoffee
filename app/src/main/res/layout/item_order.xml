@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_order_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_order_coffee_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/cappuccino" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/tv_order_coffee_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/tv_order_price"
+        app:layout_constraintStart_toEndOf="@id/card_order_image"
+        app:layout_constraintTop_toTopOf="@id/card_order_image"
+        tools:text="Cappuccino" />
+
+    <TextView
+        android:id="@+id/tv_order_coffee_details"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/light_gray"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/tv_order_coffee_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_order_coffee_name"
+        tools:text="350 ml" />
+
+    <TextView
+        android:id="@+id/tv_order_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/dark_blue"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_order_coffee_name"
+        tools:text="$3.00" />
+
+    <!-- Pengatur Jumlah -->
+    <ImageButton
+        android:id="@+id/btn_order_subtract"
+        style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/minus"
+        app:layout_constraintStart_toStartOf="@id/tv_order_coffee_details"
+        app:layout_constraintTop_toBottomOf="@id/tv_order_coffee_details"
+        app:tint="@color/dark_blue" />
+
+    <TextView
+        android:id="@+id/tv_order_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="1"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/btn_order_subtract"
+        app:layout_constraintStart_toEndOf="@id/btn_order_subtract"
+        app:layout_constraintTop_toTopOf="@id/btn_order_subtract" />
+
+    <ImageButton
+        android:id="@+id/btn_order_add"
+        style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="12dp"
+        android:src="@drawable/plus"
+        app:layout_constraintBottom_toBottomOf="@id/tv_order_quantity"
+        app:layout_constraintStart_toEndOf="@id/tv_order_quantity"
+        app:layout_constraintTop_toTopOf="@id/tv_order_quantity"
+        app:tint="@color/dark_blue" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

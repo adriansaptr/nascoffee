@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- State saat tombol terpilih -->
+    <item android:state_selected="true" android:drawable="@drawable/bg_choice_selected" />
+    <!-- State default (tidak terpilih) -->
+    <item android:drawable="@drawable/bg_choice_unselected" />
+</selector>

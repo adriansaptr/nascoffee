@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/layout_background_green"
+    tools:context=".ui.main.order.OrderDetailsFragment">
+
+    <!-- Bar Atas -->
+    <ImageView
+        android:id="@+id/iv_back_details"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="Back Button"
+        android:padding="12dp"
+        android:scaleX="-1"
+        android:src="@drawable/ic_arrow_right"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/dark_blue" />
+
+    <TextView
+        android:id="@+id/tv_title_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Order"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/iv_back_details"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_back_details" />
+
+    <ImageView
+        android:id="@+id/iv_cart_details"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="Shopping Cart"
+        android:padding="12dp"
+        android:src="@drawable/buy"
+        app:layout_constraintBottom_toBottomOf="@id/iv_back_details"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_back_details"
+        app:tint="@color/dark_blue" />
+
+    <!-- Konten Utama -->
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@id/view_bottom_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_back_details">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="24dp">
+
+            <!-- Gambar Kopi dalam Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_coffee_image"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/iv_coffee_image_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="Image of the selected coffee"
+                    android:scaleType="centerCrop"
+                    tools:src="@drawable/cappucino" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Nama Kopi dan Pengatur Jumlah -->
+            <TextView
+                android:id="@+id/tv_coffee_name_details"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/btn_subtract"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/card_coffee_image"
+                tools:text="Cappuccino" />
+
+            <TextView
+                android:id="@+id/tv_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="1"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/btn_add"
+                app:layout_constraintEnd_toStartOf="@id/btn_add"
+                app:layout_constraintTop_toTopOf="@id/btn_add" />
+
+            <ImageButton
+                android:id="@+id/btn_add"
+                style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="Increase quantity"
+                android:src="@drawable/plus"
+                app:layout_constraintBottom_toBottomOf="@id/tv_coffee_name_details"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_coffee_name_details"
+                app:tint="@color/dark_blue" />
+
+            <ImageButton
+                android:id="@+id/btn_subtract"
+                style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="Decrease quantity"
+                android:src="@drawable/minus"
+                app:layout_constraintBottom_toBottomOf="@id/tv_quantity"
+                app:layout_constraintEnd_toStartOf="@id/tv_quantity"
+                app:layout_constraintTop_toTopOf="@id/tv_quantity"
+                app:tint="@color/dark_blue" />
+
+
+            <View
+                android:id="@+id/divider1"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/light_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_coffee_name_details" />
+
+            <!-- Pilihan Tipe (Ristretto, One, Two) -->
+            <TextView
+                android:id="@+id/tv_type_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Ristretto"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider1" />
+
+            <LinearLayout
+                android:id="@+id/layout_type_choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@id/tv_type_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_type_label">
+
+                <TextView
+                    android:id="@+id/choice_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_choice_chip"
+                    android:paddingStart="24dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="24dp"
+                    android:paddingBottom="8dp"
+                    android:text="One"
+                    android:textColor="@color/dark_blue" />
+
+                <TextView
+                    android:id="@+id/choice_two"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/selector_choice_chip"
+                    android:paddingStart="24dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="24dp"
+                    android:paddingBottom="8dp"
+                    android:text="Two"
+                    android:textColor="@color/dark_blue" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/light_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_type_choice" />
+
+            <!-- Pilihan Onsite/Takeaway dengan Ikon -->
+            <TextView
+                android:id="@+id/tv_location_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Onsite / Takeaway"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider2" />
+
+            <LinearLayout
+                android:id="@+id/layout_location_choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@id/tv_location_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_location_label">
+
+                <ImageView
+                    android:id="@+id/choice_onsite"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/selector_choice_chip"
+                    android:padding="12dp"
+                    android:src="@drawable/cangkir" />
+
+                <ImageView
+                    android:id="@+id/choice_takeaway"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/selector_choice_chip"
+                    android:padding="12dp"
+                    android:src="@drawable/cup" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/light_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_location_choice" />
+
+            <!-- Pilihan Volume dengan Ikon -->
+            <TextView
+                android:id="@+id/tv_volume_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Volume, ml"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider3" />
+
+            <LinearLayout
+                android:id="@+id/layout_volume_choice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_volume_label">
+
+                <LinearLayout
+                    android:id="@+id/choice_volume_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_choice_chip"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/cup_small" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="250" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/choice_volume_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/selector_choice_chip"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/cup_normal" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="350" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/choice_volume_large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_choice_chip"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:src="@drawable/cup_big" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="450" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Tombol Assemblage -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_assemblage"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="#EADCF8"
+                android:gravity="start|center_vertical"
+                android:text="Coffee lover assemblage"
+                android:textColor="#8341D3"
+                app:cornerRadius="16dp"
+                app:icon="@drawable/filter"
+                app:iconPadding="16dp"
+                app:iconTint="#8341D3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_volume_choice" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <!-- Bar Bawah -->
+    <View
+        android:id="@+id/view_bottom_bar"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_total_amount_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="Total Amount"
+        android:textColor="@color/light_gray"
+        app:layout_constraintBottom_toTopOf="@id/tv_total_amount_value"
+        app:layout_constraintStart_toStartOf="@id/view_bottom_bar"
+        app:layout_constraintTop_toTopOf="@id/view_bottom_bar"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/tv_total_amount_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/view_bottom_bar"
+        app:layout_constraintStart_toStartOf="@id/tv_total_amount_label"
+        app:layout_constraintTop_toBottomOf="@id/tv_total_amount_label"
+        tools:text="BYN 3.00" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_next_order"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginEnd="24dp"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:text="Next"
+        android:textSize="18sp"
+        app:backgroundTint="@color/dark_blue"
+        app:cornerRadius="16dp"
+        app:layout_constraintBottom_toBottomOf="@id/view_bottom_bar"
+        app:layout_constraintEnd_toEndOf="@id/view_bottom_bar"
+        app:layout_constraintTop_toTopOf="@id/view_bottom_bar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

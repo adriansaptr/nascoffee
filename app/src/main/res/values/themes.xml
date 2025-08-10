@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+        DIPERBAIKI: Induk (parent) dari theme ini diganti menjadi
+        Theme.MaterialComponents.DayNight.NoActionBar
+        Ini adalah theme yang cocok untuk AppCompatActivity.
+    -->
+    <style name="Theme.NasCoffee3" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Atur warna primer, sekunder, dll. di sini jika perlu -->
+        <!-- <item name="colorPrimary">@color/dark_blue</item> -->
+    </style>
+
+    <!-- Theme khusus untuk Splash Screen (ini sudah benar, tidak perlu diubah) -->
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/dark_blue</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/icon</item>
+        <item name="postSplashScreenTheme">@style/Theme.NasCoffee3</item>
+    </style>
+
+</resources>

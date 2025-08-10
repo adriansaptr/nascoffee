@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.main.order.CoffeeCustomizerFragment">
+
+    <!-- Bar Atas -->
+    <ImageView
+        android:id="@+id/iv_back_customizer"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="Back Button"
+        android:padding="12dp"
+        android:scaleX="-1"
+        android:src="@drawable/ic_arrow_right"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/dark_blue" />
+
+    <TextView
+        android:id="@+id/tv_title_customizer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Coffee lover assemblage"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/iv_back_customizer"
+        app:layout_constraintEnd_toStartOf="@id/iv_cart_customizer"
+        app:layout_constraintStart_toEndOf="@id/iv_back_customizer"
+        app:layout_constraintTop_toTopOf="@id/iv_back_customizer" />
+
+    <ImageView
+        android:id="@+id/iv_cart_customizer"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="Shopping Cart"
+        android:padding="12dp"
+        android:src="@drawable/ic_cart"
+        app:layout_constraintBottom_toBottomOf="@id/iv_back_customizer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_back_customizer"
+        app:tint="@color/dark_blue" />
+
+    <!-- Konten Utama yang Bisa Di-scroll -->
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@id/view_bottom_bar_customizer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_back_customizer">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@drawable/divider_line"
+            android:orientation="vertical"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:paddingBottom="24dp"
+            android:showDividers="middle">
+
+            <!-- Pilihan Coffee Type -->
+            <include layout="@layout/item_customizer_slider" android:id="@+id/row_coffee_type" />
+
+            <!-- Pilihan Coffee Sort -->
+            <include layout="@layout/item_customizer_row" android:id="@+id/row_coffee_sort" />
+
+            <!-- Pilihan Roasting -->
+            <include layout="@layout/item_customizer_row_icons" android:id="@+id/row_roasting" />
+
+            <!-- Pilihan Grinding -->
+            <include layout="@layout/item_customizer_row_icons" android:id="@+id/row_grinding" />
+
+            <!-- Pilihan Milk -->
+            <include layout="@layout/item_customizer_row" android:id="@+id/row_milk" />
+
+            <!-- Pilihan Syrup -->
+            <include layout="@layout/item_customizer_row" android:id="@+id/row_syrup" />
+
+            <!-- Pilihan Additives -->
+            <include layout="@layout/item_customizer_row" android:id="@+id/row_additives" />
+
+            <!-- Pilihan Ice -->
+            <include layout="@layout/item_customizer_row_icons" android:id="@+id/row_ice" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bar Bawah -->
+    <View
+        android:id="@+id/view_bottom_bar_customizer"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_total_amount_label_customizer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="Total Amount"
+        android:textColor="@color/light_gray"
+        app:layout_constraintBottom_toTopOf="@id/tv_total_amount_value_customizer"
+        app:layout_constraintStart_toStartOf="@id/view_bottom_bar_customizer"
+        app:layout_constraintTop_toTopOf="@id/view_bottom_bar_customizer"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/tv_total_amount_value_customizer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/view_bottom_bar_customizer"
+        app:layout_constraintStart_toStartOf="@id/tv_total_amount_label_customizer"
+        app:layout_constraintTop_toBottomOf="@id/tv_total_amount_label_customizer"
+        tools:text="BYN 9.00" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_next_customizer"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginEnd="24dp"
+        android:contentDescription="Next button"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:text="Next"
+        android:textSize="18sp"
+        app:backgroundTint="@color/dark_blue"
+        app:cornerRadius="16dp"
+        app:layout_constraintBottom_toBottomOf="@id/view_bottom_bar_customizer"
+        app:layout_constraintEnd_toEndOf="@id/view_bottom_bar_customizer"
+        app:layout_constraintTop_toTopOf="@id/view_bottom_bar_customizer" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Warna default, mungkin sudah ada -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Pastikan warna ini ada -->
+    <color name="dark_blue">#1E3945</color>
+    <color name="light_gray">#D3D3D3</color>
+    <color name="layout_background_green">#F0F7F6</color>
+    <color name="first_blue">#324A59</color>
+
+</resources>

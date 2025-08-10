@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/welcomeFragment">
+
+    <!-- Alur Otentikasi -->
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.example.nascoffee3.ui.auth.WelcomeFragment"
+        tools:layout="@layout/fragment_welcome">
+        <action
+            android:id="@+id/action_welcomeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.nascoffee3.ui.auth.LoginFragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_startupFragment"
+            app:destination="@id/startupFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.nascoffee3.ui.auth.RegisterFragment"
+        tools:layout="@layout/fragment_register" />
+    <fragment
+        android:id="@+id/startupFragment"
+        android:name="com.example.nascoffee3.ui.auth.StartupFragment"
+        tools:layout="@layout/fragment_startup" >
+        <action
+            android:id="@+id/action_startupFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/startupFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+    <!-- Alur Utama -->
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.nascoffee3.ui.main.home.HomeFragment"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_orderDetailsFragment"
+            app:destination="@id/orderDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_myOrderFragment"
+            app:destination="@id/myOrderFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/orderDetailsFragment"
+        android:name="com.example.nascoffee3.ui.main.order.OrderDetailsFragment"
+        tools:layout="@layout/fragment_order_details" >
+        <argument
+            android:name="coffeeId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_orderDetailsFragment_to_coffeeCustomizerFragment"
+            app:destination="@id/coffeeCustomizerFragment" />
+        <action
+            android:id="@+id/action_orderDetailsFragment_to_myOrderFragment"
+            app:destination="@id/myOrderFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/coffeeCustomizerFragment"
+        android:name="com.example.nascoffee3.ui.main.order.CoffeeCustomizerFragment"
+        tools:layout="@layout/fragment_coffee_customizer" >
+        <action
+            android:id="@+id/action_coffeeCustomizerFragment_to_selectAdditivesFragment"
+            app:destination="@id/selectAdditivesFragment" />
+        <action
+            android:id="@+id/action_coffeeCustomizerFragment_to_myOrderFragment"
+            app:destination="@id/myOrderFragment" />
+        <!-- Action baru untuk pindah ke halaman Coffee Sort -->
+        <action
+            android:id="@+id/action_coffeeCustomizerFragment_to_selectCoffeeSortFragment"
+            app:destination="@id/selectCoffeeSortFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/selectAdditivesFragment"
+        android:name="com.example.nascoffee3.ui.main.order.SelectAdditivesFragment"
+        tools:layout="@layout/fragment_select_additives" />
+
+    <fragment
+        android:id="@+id/myOrderFragment"
+        android:name="com.example.nascoffee3.ui.main.order.MyOrderFragment"
+        tools:layout="@layout/fragment_my_order" />
+
+    <!-- Mendaftarkan halaman Coffee Sort sebagai tujuan baru -->
+    <fragment
+        android:id="@+id/selectCoffeeSortFragment"
+        android:name="com.example.nascoffee3.ui.main.order.SelectCoffeeSortFragment"
+        tools:layout="@layout/fragment_select_coffee_sort" />
+
+</navigation>

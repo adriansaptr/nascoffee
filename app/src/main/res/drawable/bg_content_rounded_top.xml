@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Mengatur warna solid menjadi biru tua -->
+    <solid android:color="@color/first_blue" />
+
+    <!-- Mengatur sudut melengkung hanya untuk bagian atas -->
+    <corners
+        android:topLeftRadius="34dp"
+        android:topRightRadius="34dp" />
+
+</shape>
+
