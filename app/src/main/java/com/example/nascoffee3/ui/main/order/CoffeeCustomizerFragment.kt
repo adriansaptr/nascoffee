@@ -5,22 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.nascoffee3.R
+import com.example.nascoffee3.data.model.OrderItem
 import com.example.nascoffee3.databinding.FragmentCoffeeCustomizerBinding
-import com.example.nascoffee3.databinding.ItemCustomizerRowBinding
 import com.example.nascoffee3.databinding.ItemCustomizerRowIconsBinding
-import com.example.nascoffee3.databinding.ItemCustomizerSliderBinding
 
 class CoffeeCustomizerFragment : Fragment() {
 
     private var _binding: FragmentCoffeeCustomizerBinding? = null
     private val binding get() = _binding!!
+
+    private val customizerViewModel: CoffeeCustomizerViewModel by viewModels()
+    private val orderViewModel: OrderViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,109 +36,121 @@ class CoffeeCustomizerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Mendengarkan hasil dari halaman Additives
-        setFragmentResultListener("additives_request") { _, bundle ->
-            val selectedItems = bundle.getStringArrayList("selected_items")
-            val additivesRow = ItemCustomizerRowBinding.bind(binding.rowAdditives.root)
-            if (selectedItems.isNullOrEmpty()) {
-                setupTextRow(additivesRow, "Additives", "Select")
-            } else {
-                setupTextRow(additivesRow, "Additives", "${selectedItems.size} selected")
-            }
-        }
-
-        setupClickListeners()
+        setupResultListeners()
         setupCustomizerRows()
+        observeViewModel()
     }
 
-    private fun setupClickListeners() {
-        binding.ivBackCustomizer.setOnClickListener {
-            findNavController().popBackStack()
+    private fun setupResultListeners() {
+        setFragmentResultListener("additives_request") { _, bundle ->
+            val selectedItems = bundle.getStringArrayList("selected_items")
+            customizerViewModel.additives.value = selectedItems
         }
+        setFragmentResultListener("coffee_sort_request") { _, bundle ->
+            val selectedItem = bundle.getString("selected_item")
+            customizerViewModel.coffeeSort.value = selectedItem
+        }
+    }
 
-        // DIPERBARUI: Memberi aksi pada tombol Next
-        binding.btnNextCustomizer.setOnClickListener {
-            findNavController().navigate(R.id.action_coffeeCustomizerFragment_to_myOrderFragment)
+    private fun observeViewModel() {
+        val roastingRowBinding = ItemCustomizerRowIconsBinding.bind(binding.rowRoasting.root)
+        val grindingRowBinding = ItemCustomizerRowIconsBinding.bind(binding.rowGrinding.root)
+        val iceRowBinding = ItemCustomizerRowIconsBinding.bind(binding.rowIce.root)
+
+        customizerViewModel.roastingLevel.observe(viewLifecycleOwner) { level ->
+            updateLevelSelection(listOf(roastingRowBinding.ivIcon1, roastingRowBinding.ivIcon2, roastingRowBinding.ivIcon3), level)
+        }
+        customizerViewModel.grindingSize.observe(viewLifecycleOwner) { size ->
+            val selectedIcon = if (size == "Small") grindingRowBinding.ivIcon1 else grindingRowBinding.ivIcon2
+            updateSingleSelection(listOf(grindingRowBinding.ivIcon1, grindingRowBinding.ivIcon2), selectedIcon)
+        }
+        customizerViewModel.iceLevel.observe(viewLifecycleOwner) { level ->
+            updateLevelSelection(listOf(iceRowBinding.ivIcon1, iceRowBinding.ivIcon2, iceRowBinding.ivIcon3), level)
+        }
+        customizerViewModel.coffeeSort.observe(viewLifecycleOwner) { sort ->
+            binding.rowCoffeeSort.tvRowValue.text = sort
+        }
+        customizerViewModel.additives.observe(viewLifecycleOwner) { list ->
+            if (list.isNullOrEmpty()) {
+                binding.rowAdditives.tvRowValue.text = "Select"
+            } else {
+                binding.rowAdditives.tvRowValue.text = "${list.size} selected"
+            }
         }
     }
 
     private fun setupCustomizerRows() {
-        // Mengatur baris slider
-        ItemCustomizerSliderBinding.bind(binding.rowCoffeeType.root)
+        binding.ivBackCustomizer.setOnClickListener { findNavController().popBackStack() }
 
-        // Mengatur baris-baris dengan teks dan panah (dengan data dummy)
-        setupTextRow(ItemCustomizerRowBinding.bind(binding.rowCoffeeSort.root), "Coffee sort", "Arabica")
-        setupTextRow(ItemCustomizerRowBinding.bind(binding.rowMilk.root), "Milk", "Whole Milk")
-        setupTextRow(ItemCustomizerRowBinding.bind(binding.rowSyrup.root), "Syrup", "Vanilla")
+        binding.rowCoffeeSort.tvRowTitle.text = "Coffee sort"
+        binding.rowCoffeeSort.root.setOnClickListener { findNavController().navigate(R.id.action_coffeeCustomizerFragment_to_selectCoffeeSortFragment) }
 
-        // Mengatur baris Additives agar bisa di-klik
-        val additivesRow = ItemCustomizerRowBinding.bind(binding.rowAdditives.root)
-        setupTextRow(additivesRow, "Additives", "2 selected") // Teks awal
-        additivesRow.root.setOnClickListener {
-            findNavController().navigate(R.id.action_coffeeCustomizerFragment_to_selectAdditivesFragment)
+        val roastingRowBinding = ItemCustomizerRowIconsBinding.bind(binding.rowRoasting.root)
+        roastingRowBinding.tvRowTitle.text = "Roasting"
+        roastingRowBinding.ivIcon1.setImageResource(R.drawable.flame)
+        roastingRowBinding.ivIcon2.setImageResource(R.drawable.flame)
+        roastingRowBinding.ivIcon3.setImageResource(R.drawable.flame)
+        roastingRowBinding.ivIcon3.visibility = View.VISIBLE
+        roastingRowBinding.ivIcon1.setOnClickListener { customizerViewModel.setRoastingLevel(1) }
+        roastingRowBinding.ivIcon2.setOnClickListener { customizerViewModel.setRoastingLevel(2) }
+        roastingRowBinding.ivIcon3.setOnClickListener { customizerViewModel.setRoastingLevel(3) }
+
+        val grindingRowBinding = ItemCustomizerRowIconsBinding.bind(binding.rowGrinding.root)
+        grindingRowBinding.tvRowTitle.text = "Grinding"
+        grindingRowBinding.ivIcon1.setImageResource(R.drawable.bean)
+        grindingRowBinding.ivIcon2.setImageResource(R.drawable.bean)
+        grindingRowBinding.ivIcon1.setOnClickListener { customizerViewModel.setGrindingSize("Small") }
+        grindingRowBinding.ivIcon2.setOnClickListener { customizerViewModel.setGrindingSize("Large") }
+
+        binding.rowMilk.tvRowTitle.text = "Milk"
+        binding.rowMilk.tvRowValue.text = "Whole Milk"
+        binding.rowMilk.root.setOnClickListener { Toast.makeText(context, "Milk Clicked", Toast.LENGTH_SHORT).show() }
+
+        binding.rowSyrup.tvRowTitle.text = "Syrup"
+        binding.rowSyrup.tvRowValue.text = "Vanilla"
+        binding.rowSyrup.root.setOnClickListener { Toast.makeText(context, "Syrup Clicked", Toast.LENGTH_SHORT).show() }
+
+        binding.rowAdditives.tvRowTitle.text = "Additives"
+        binding.rowAdditives.tvRowValue.text = "2 selected"
+        binding.rowAdditives.root.setOnClickListener { findNavController().navigate(R.id.action_coffeeCustomizerFragment_to_selectAdditivesFragment) }
+
+        val iceRowBinding = ItemCustomizerRowIconsBinding.bind(binding.rowIce.root)
+        iceRowBinding.tvRowTitle.text = "Ice"
+        iceRowBinding.ivIcon1.setImageResource(R.drawable.ice)
+        iceRowBinding.ivIcon2.setImageResource(R.drawable.ice)
+        iceRowBinding.ivIcon3.setImageResource(R.drawable.ice)
+        iceRowBinding.ivIcon3.visibility = View.VISIBLE
+        iceRowBinding.ivIcon1.setOnClickListener { customizerViewModel.setIceLevel(1) }
+        iceRowBinding.ivIcon2.setOnClickListener { customizerViewModel.setIceLevel(2) }
+        iceRowBinding.ivIcon3.setOnClickListener { customizerViewModel.setIceLevel(3) }
+
+        binding.btnNextCustomizer.setOnClickListener {
+            val detailsString = "Roast: ${customizerViewModel.roastingLevel.value}, Grind: ${customizerViewModel.grindingSize.value}"
+
+            val customizedOrderItem = OrderItem(
+                id = System.currentTimeMillis().toInt(),
+                name = "Customized Coffee",
+                details = detailsString,
+                price = 9.00,
+                quantity = 1,
+                imageUrl = "cappucino",
+                roastingLevel = customizerViewModel.roastingLevel.value,
+                grindingSize = customizerViewModel.grindingSize.value,
+                iceLevel = customizerViewModel.iceLevel.value,
+                coffeeSort = customizerViewModel.coffeeSort.value,
+                milkType = customizerViewModel.milkType.value,
+                syrupType = customizerViewModel.syrupType.value,
+                additives = customizerViewModel.additives.value
+            )
+
+            orderViewModel.addOrderItem(customizedOrderItem)
+            findNavController().navigate(R.id.action_coffeeCustomizerFragment_to_myOrderFragment)
         }
-
-        // Mengatur baris-baris dengan ikon interaktif
-        setupIconRow(ItemCustomizerRowIconsBinding.bind(binding.rowRoasting.root), "Roasting", listOf(R.drawable.flame, R.drawable.flame, R.drawable.flame))
-        setupIconRow(ItemCustomizerRowIconsBinding.bind(binding.rowGrinding.root), "Grinding", listOf(R.drawable.bean, R.drawable.bean), isGrinding = true)
-        setupIconRow(ItemCustomizerRowIconsBinding.bind(binding.rowIce.root), "Ice", listOf(R.drawable.ice, R.drawable.ice, R.drawable.ice))
     }
 
-    private fun setupTextRow(rowBinding: ItemCustomizerRowBinding, title: String, value: String = "Select") {
-        rowBinding.tvRowTitle.text = title
-        rowBinding.tvRowValue.text = value
-        // Menambahkan Toast untuk baris yang belum punya tujuan
-        if (title != "Additives") {
-            rowBinding.root.setOnClickListener {
-                Toast.makeText(context, "$title clicked", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    private fun setupIconRow(rowBinding: ItemCustomizerRowIconsBinding, title: String, iconResIds: List<Int>, isGrinding: Boolean = false) {
-        rowBinding.tvRowTitle.text = title
-        rowBinding.iconGroup.removeAllViews() // Hapus ikon lama jika ada
-
-        val icons = mutableListOf<ImageView>()
-        iconResIds.forEachIndexed { index, resId ->
-            val icon = createIcon(resId, isGrinding, index)
-            rowBinding.iconGroup.addView(icon)
-            icons.add(icon)
-        }
-
-        icons.forEach { icon ->
-            icon.setOnClickListener {
-                if (title == "Roasting" || title == "Ice") {
-                    updateLevelSelection(icons, it as ImageView)
-                } else {
-                    updateSingleSelection(icons, it as ImageView)
-                }
-            }
-        }
-
-        // Atur pilihan default
-        if (title == "Roasting") updateLevelSelection(icons, icons[2]) // Level 3
-        if (title == "Grinding") updateSingleSelection(icons, icons[1]) // Large
-        if (title == "Ice") updateLevelSelection(icons, null, true) // Default tidak ada es
-    }
-
-    private fun createIcon(resId: Int, isGrinding: Boolean, index: Int): ImageView {
-        val imageView = ImageView(requireContext())
-        val size = if (isGrinding) if (index == 0) 20 else 28 else 24
-        val sizeInDp = (size * resources.displayMetrics.density).toInt()
-        val layoutParams = LinearLayout.LayoutParams(sizeInDp, sizeInDp)
-        if (index > 0) {
-            layoutParams.marginStart = (8 * resources.displayMetrics.density).toInt()
-        }
-        imageView.layoutParams = layoutParams
-        imageView.setImageResource(resId)
-        return imageView
-    }
-
-    private fun updateLevelSelection(icons: List<ImageView>, selectedIcon: ImageView?, deselectAll: Boolean = false) {
-        val selectedIndex = if (deselectAll || selectedIcon == null) -1 else icons.indexOf(selectedIcon)
+    private fun updateLevelSelection(icons: List<ImageView>, level: Int) {
         icons.forEachIndexed { index, icon ->
-            val isSelected = index <= selectedIndex
+            val isSelected = (index + 1) <= level
             icon.alpha = if (isSelected) 1.0f else 0.5f
             val colorRes = if (isSelected) R.color.dark_blue else R.color.light_gray
             icon.setColorFilter(ContextCompat.getColor(requireContext(), colorRes))

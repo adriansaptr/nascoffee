@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.nascoffee3.R
 import com.example.nascoffee3.data.model.OrderItem
 import com.example.nascoffee3.databinding.FragmentMyOrderBinding
 import java.text.NumberFormat
@@ -38,10 +40,18 @@ class MyOrderFragment : Fragment() {
         binding.ivBackMyOrder.setOnClickListener {
             findNavController().popBackStack()
         }
+
+        binding.btnCheckout.setOnClickListener {
+            if (orderViewModel.orderItems.value?.isNotEmpty() == true) {
+                findNavController().navigate(R.id.action_myOrderFragment_to_orderConfirmedFragment)
+                orderViewModel.clearCart()
+            } else {
+                Toast.makeText(context, "Your cart is empty", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun setupRecyclerView() {
-        // DIPERBARUI: Saat membuat adapter, kita berikan perintah onIncrease dan onDecrease
         orderAdapter = MyOrderAdapter(
             orderItems = emptyList(),
             onIncrease = { item -> orderViewModel.increaseItemQuantity(item) },
@@ -54,10 +64,8 @@ class MyOrderFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        // Mengamati perubahan pada daftar pesanan dari ViewModel
         orderViewModel.orderItems.observe(viewLifecycleOwner) { orderList ->
-            // Memperbarui adapter dengan daftar baru dan menghitung ulang total
-            orderAdapter.updateItems(orderList)
+            orderAdapter.updateItems(ArrayList(orderList))
             updateSummary(orderList)
         }
     }

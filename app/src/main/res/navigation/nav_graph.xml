@@ -54,7 +54,6 @@
             android:id="@+id/action_homeFragment_to_myOrderFragment"
             app:destination="@id/myOrderFragment" />
     </fragment>
-
     <fragment
         android:id="@+id/orderDetailsFragment"
         android:name="com.example.nascoffee3.ui.main.order.OrderDetailsFragment"
@@ -65,11 +64,7 @@
         <action
             android:id="@+id/action_orderDetailsFragment_to_coffeeCustomizerFragment"
             app:destination="@id/coffeeCustomizerFragment" />
-        <action
-            android:id="@+id/action_orderDetailsFragment_to_myOrderFragment"
-            app:destination="@id/myOrderFragment" />
     </fragment>
-
     <fragment
         android:id="@+id/coffeeCustomizerFragment"
         android:name="com.example.nascoffee3.ui.main.order.CoffeeCustomizerFragment"
@@ -78,25 +73,34 @@
             android:id="@+id/action_coffeeCustomizerFragment_to_selectAdditivesFragment"
             app:destination="@id/selectAdditivesFragment" />
         <action
-            android:id="@+id/action_coffeeCustomizerFragment_to_myOrderFragment"
-            app:destination="@id/myOrderFragment" />
-        <!-- Action baru untuk pindah ke halaman Coffee Sort -->
-        <action
             android:id="@+id/action_coffeeCustomizerFragment_to_selectCoffeeSortFragment"
             app:destination="@id/selectCoffeeSortFragment" />
+        <action
+            android:id="@+id/action_coffeeCustomizerFragment_to_myOrderFragment"
+            app:destination="@id/myOrderFragment" />
     </fragment>
-
     <fragment
         android:id="@+id/selectAdditivesFragment"
         android:name="com.example.nascoffee3.ui.main.order.SelectAdditivesFragment"
         tools:layout="@layout/fragment_select_additives" />
-
     <fragment
         android:id="@+id/myOrderFragment"
         android:name="com.example.nascoffee3.ui.main.order.MyOrderFragment"
-        tools:layout="@layout/fragment_my_order" />
-
-    <!-- Mendaftarkan halaman Coffee Sort sebagai tujuan baru -->
+        tools:layout="@layout/fragment_my_order" >
+        <action
+            android:id="@+id/action_myOrderFragment_to_orderConfirmedFragment"
+            app:destination="@id/orderConfirmedFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderConfirmedFragment"
+        android:name="com.example.nascoffee3.ui.main.order.OrderConfirmedFragment"
+        tools:layout="@layout/fragment_order_confirmed" >
+        <action
+            android:id="@+id/action_orderConfirmedFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/selectCoffeeSortFragment"
         android:name="com.example.nascoffee3.ui.main.order.SelectCoffeeSortFragment"

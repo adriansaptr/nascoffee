@@ -18,8 +18,8 @@ class SelectCoffeeSortFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val coffeeSorts = mutableListOf(
-        CoffeeSort("Arabica", true),
-        CoffeeSort("Robusta")
+        CoffeeSort("Arabica", 2.00,true),
+        CoffeeSort("Robusta", 1.00)
     )
 
     override fun onCreateView(

@@ -68,28 +68,13 @@
             android:paddingBottom="24dp"
             android:showDividers="middle">
 
-            <!-- Pilihan Coffee Type -->
             <include layout="@layout/item_customizer_slider" android:id="@+id/row_coffee_type" />
-
-            <!-- Pilihan Coffee Sort -->
             <include layout="@layout/item_customizer_row" android:id="@+id/row_coffee_sort" />
-
-            <!-- Pilihan Roasting -->
             <include layout="@layout/item_customizer_row_icons" android:id="@+id/row_roasting" />
-
-            <!-- Pilihan Grinding -->
             <include layout="@layout/item_customizer_row_icons" android:id="@+id/row_grinding" />
-
-            <!-- Pilihan Milk -->
             <include layout="@layout/item_customizer_row" android:id="@+id/row_milk" />
-
-            <!-- Pilihan Syrup -->
             <include layout="@layout/item_customizer_row" android:id="@+id/row_syrup" />
-
-            <!-- Pilihan Additives -->
             <include layout="@layout/item_customizer_row" android:id="@+id/row_additives" />
-
-            <!-- Pilihan Ice -->
             <include layout="@layout/item_customizer_row_icons" android:id="@+id/row_ice" />
 
         </LinearLayout>

@@ -14,15 +14,24 @@ class OrderDetailsViewModel(application: Application) : AndroidViewModel(applica
 
     private val repository: CoffeeRepository
 
+    // Data Kopi Asli dari Database
     private val _coffeeId = MutableLiveData<Int>()
     val coffee: LiveData<Coffee>
 
-    // LiveData untuk menyimpan kuantitas saat ini
-    private val _quantity = MutableLiveData<Int>(1)
-    val quantity: LiveData<Int> = _quantity
+    // --- State Kustomisasi Pesanan (Otak yang Mengingat Pilihan) ---
+    val quantity = MutableLiveData(1)
+    val ristrettoType = MutableLiveData("One")
+    val locationType = MutableLiveData("Onsite")
+    val volume = MutableLiveData("350 ml")
+    val coffeeSort = MutableLiveData("Arabica")
+    val milkType = MutableLiveData("Whole Milk")
+    val syrupType = MutableLiveData("Vanilla")
+    val additives = MutableLiveData<List<String>>(emptyList())
+    val roastingLevel = MutableLiveData(3)
+    val grindingSize = MutableLiveData("Large")
+    val iceLevel = MutableLiveData(0)
 
-    // LiveData untuk menyimpan harga total
-    private val _totalPrice = MutableLiveData<Double>()
+    private val _totalPrice = MutableLiveData(0.0)
     val totalPrice: LiveData<Double> = _totalPrice
 
     init {
@@ -37,28 +46,9 @@ class OrderDetailsViewModel(application: Application) : AndroidViewModel(applica
         _coffeeId.value = id
     }
 
-    // Fungsi untuk menambah kuantitas
-    fun increaseQuantity() {
-        val currentQuantity = _quantity.value ?: 1
-        _quantity.value = currentQuantity + 1
-        calculateTotalPrice()
-    }
-
-    // Fungsi untuk mengurangi kuantitas
-    fun decreaseQuantity() {
-        val currentQuantity = _quantity.value ?: 1
-        if (currentQuantity > 1) {
-            _quantity.value = currentQuantity - 1
-            calculateTotalPrice()
-        }
-    }
-
-    // Fungsi untuk menghitung harga total
     fun calculateTotalPrice() {
-        val currentCoffee = coffee.value
-        val currentQuantity = _quantity.value ?: 1
-        currentCoffee?.let {
-            _totalPrice.value = it.price * currentQuantity
-        }
+        val coffeePrice = coffee.value?.price ?: 0.0
+        val currentQuantity = quantity.value ?: 1
+        _totalPrice.value = coffeePrice * currentQuantity
     }
 }

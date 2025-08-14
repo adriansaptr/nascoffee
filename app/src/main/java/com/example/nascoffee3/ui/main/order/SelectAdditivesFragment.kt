@@ -17,7 +17,6 @@ class SelectAdditivesFragment : Fragment() {
     private var _binding: FragmentSelectAdditivesBinding? = null
     private val binding get() = _binding!!
 
-    // Menyimpan daftar di level class agar tidak reset saat interaksi
     private val additivesList = mutableListOf(
         Additive("Ceylon cinnamon", isSelected = true),
         Additive("Grated chocolate"),
@@ -46,21 +45,14 @@ class SelectAdditivesFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        // Memberi aksi pada tombol Confirm
         binding.btnConfirmAdditives.setOnClickListener {
-            // 1. Filter untuk mendapatkan nama item yang dipilih
             val selectedAdditives = additivesList.filter { it.isSelected }.map { it.name }
-
-            // 2. Kirim data kembali ke halaman sebelumnya menggunakan Fragment Result API
             setFragmentResult("additives_request", bundleOf("selected_items" to selectedAdditives))
-
-            // 3. Kembali ke halaman sebelumnya
             findNavController().popBackStack()
         }
     }
 
     private fun setupRecyclerView() {
-        // Mengatur RecyclerView dengan daftar yang sudah dinamis
         val additivesAdapter = AdditivesAdapter(additivesList)
         binding.rvAdditivesList.apply {
             layoutManager = LinearLayoutManager(context)
